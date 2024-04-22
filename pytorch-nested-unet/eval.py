@@ -10,6 +10,7 @@ from albumentations.augmentations import transforms
 from albumentations.core.composition import Compose
 from sklearn.model_selection import train_test_split
 from tqdm import tqdm
+import numpy as np
 
 import archs
 from dataset import Dataset
@@ -60,7 +61,21 @@ def main():
     img_ids = [os.path.splitext(os.path.basename(p))[0] for p in img_ids]
 
     val_img_ids = img_ids
-    #print (img_ids)
+    
+    mask_ids = glob(os.path.join('inputs', args.dataset, 'masks/0', '*' + args.mask_ext))
+    mask_ids = [os.path.splitext(os.path.basename(p))[0] for p in mask_ids]
+    
+    not_in_masks = list(set(img_ids) - set(mask_ids))
+    
+    for not_mask in not_in_masks:
+        img_path = os.path.join('inputs', args.dataset, 'images', not_mask + args.img_ext)
+        img = cv2.imread(img_path)
+        height, width, _ = img.shape
+        mask = 0 * np.ones((height, width), dtype=np.uint8)
+        mask_path = os.path.join('inputs', args.dataset, 'masks/0/', not_mask + args.mask_ext)
+        cv2.imwrite(mask_path, mask)
+        
+
 
     model.load_state_dict(torch.load('models/%s/model.pth' %
                                      config['name']))
