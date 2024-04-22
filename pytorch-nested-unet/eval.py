@@ -24,6 +24,10 @@ def parse_args():
                         help='model name')
     parser.add_argument('--dataset', default=None,
                         help='dataset name')
+    parser.add_argument('--img_ext', default='.png',
+                        help='image file extension')
+    parser.add_argument('--mask_ext', default='.png',
+                        help='mask file extension')
 
     args = parser.parse_args()
 
@@ -52,7 +56,7 @@ def main():
     model = model.cuda()
 
     # Data loading code
-    img_ids = glob(os.path.join('inputs', args.dataset, 'images', '*' + ".jpg"))
+    img_ids = glob(os.path.join('inputs', args.dataset, 'images', '*' + args.img_ext))
     img_ids = [os.path.splitext(os.path.basename(p))[0] for p in img_ids]
 
     val_img_ids = img_ids
@@ -71,8 +75,8 @@ def main():
         img_ids=val_img_ids,
         img_dir=os.path.join('inputs', args.dataset, 'images'),
         mask_dir=os.path.join('inputs', args.dataset, 'masks'),
-        img_ext=".jpg",
-        mask_ext="_Segmentation.png",
+        img_ext=args.img_ext,
+        mask_ext=args.mask_ext,
         num_classes=config['num_classes'],
         transform=val_transform)
     val_loader = torch.utils.data.DataLoader(
