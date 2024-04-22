@@ -37,14 +37,15 @@ inputs
 We also provide the gold-standard dataset and weak labels used in this paper for reproducibility.
 
 Datasets:
-    - [BUSI](https://www.kaggle.com/datasets/aryashah2k/breast-ultrasound-images-dataset)
-    - [ISIC 2016 Part 3B](https://challenge.isic-archive.com/data/)
-    - [CXR-COVID](https://data.mendeley.com/datasets/xztwjmktrg/2)
+- [BUSI](https://www.kaggle.com/datasets/aryashah2k/breast-ultrasound-images-dataset)
+- [ISIC 2016 Part 3B](https://challenge.isic-archive.com/data/)
+- [CXR-COVID](https://data.mendeley.com/datasets/xztwjmktrg/2)
     
 ### 2. Train a model on the gold-standard dataset
 
 Next, train an initial model on the gold-standard dataset. This will be used to generate prompts for MedSAM and generate the weak labels:
 
+    cd pytorch-nested-unet
     python train.py --dataset <gs dataset> --arch NestedUNet 
 	    --img_ext .png --mask_ext .png --batch_size 4 
 		--input_w 256 --input_h 256
@@ -68,7 +69,7 @@ For example:
 This will output the predictions to a `outputs/<model name>/<dataset name>/0` (the prediction path).
 ### 3. Generate predictions on the unlabeled dataset
 
-Download the MedSAM bounding-box checkpoint and/or the MedSAM point-prompt checkpoint [here](https://drive.google.com/drive/folders/1ETWmi4AiniJeWOt6HAsYgTjYv_fkgzoN) and place them in the folder `MedSAM/work_dir/MedSAM/`.Run the notebook `generate-masks.ipynb`, which will generate the weak labels and provide a visualization of the coarse labels, prompts, and weak labels. 
+Download the MedSAM bounding-box checkpoint and/or the MedSAM point-prompt checkpoint [here](https://drive.google.com/drive/folders/1ETWmi4AiniJeWOt6HAsYgTjYv_fkgzoN) and place them in the folder `generate-weak-labels/MedSAM/work_dir/MedSAM/`.Run the notebook `generate-weak-labels/generate-masks.ipynb`, which will generate the weak labels and provide a visualization of the coarse labels, prompts, and weak labels. 
 
 ### 4. Train a model on the augmented dataset
 
