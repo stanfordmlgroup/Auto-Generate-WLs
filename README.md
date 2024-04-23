@@ -1,6 +1,6 @@
 
 # Auto-Generate-WLs
-Code repository supporting the paper "Auto-Generating Weak Labels for Real & Synthetic Data to Improve Label-Scarce Medical Image Segmentation". For reproducibility, we have included all datasets + generated weak labels used in the paper.
+Code repository supporting the paper "Auto-Generating Weak Labels for Real & Synthetic Data to Improve Label-Scarce Medical Image Segmentation," which was accepted at MIDL 2024. For reproducibility, we have included all datasets + generated weak labels used in the paper.
 
 ## Using the code:
 ### 1. Prepare codebase and data
